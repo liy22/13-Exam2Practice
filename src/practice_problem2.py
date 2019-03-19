@@ -58,7 +58,29 @@ def run_test_practice_problem2a():
     print('--------------------------------------------------')
     print('Testing the   practice_problem2a   function:')
     print('--------------------------------------------------')
+    print("Test 1")
+    expected = [3, 5, 7]
+    print('Expected:', expected)
+    actual = practice_problem2a([1, 3, 5], 2)
+    print('Actual:', actual)
 
+    print("Test 2")
+    expected = [5, 7, 9]
+    print('Expected:', expected)
+    actual = practice_problem2a([1, 3, 5], 4)
+    print('Actual:', actual)
+
+    print("Test 3")
+    expected = [42, 43, 45]
+    print('Expected:', expected)
+    actual = practice_problem2a([32, 33, 35], 10)
+    print('Actual:', actual)
+
+    print("Test 4")
+    expected = [13, 15, 27, 4]
+    print('Expected:', expected)
+    actual = practice_problem2a([6, 8, 20, -3], 7)
+    print('Actual:', actual)
 
 def practice_problem2a(sequence, delta):
     """
@@ -86,7 +108,9 @@ def practice_problem2a(sequence, delta):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   5 minutes.
     ###########################################################################
-
+    for k in range(len(sequence)):
+        sequence[k] = sequence[k] + delta
+    return sequence
 
 def run_test_practice_problem2b():
     """ Tests the   practice_problem2b  function. """
@@ -195,7 +219,12 @@ def practice_problem2b(sequence):
     #    TIME ESTIMATE:   10 minutes.
     ###########################################################################
 
-
+    new_string = ''
+    for k in range(len(sequence)):
+        if len(sequence[k]) > 0:
+            new_list = sequence[k]
+            new_string = new_string + new_list[0]
+    return new_string
 ###############################################################################
 # Our tests use the following to print error messages in red.
 # Do NOT change it.  You do NOT have to do anything with it.

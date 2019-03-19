@@ -40,15 +40,15 @@ def main():
     # UN-comment tests as you work the problems.
     ###########################################################################
 
-    # run_test_init()
-    # run_test_append_string()
-    # run_test_double()
-    # run_test_shrink()
-    # run_test_double_then_shrink()
-    # run_test_reset()
-    # run_test_steal()
-    # run_test_get_history()
-    # run_test_combined_box()
+    run_test_init()
+    run_test_append_string()
+    run_test_double()
+    run_test_shrink()
+    run_test_double_then_shrink()
+    run_test_reset()
+    run_test_steal()
+    run_test_get_history()
+    run_test_combined_box()
 
 
 ###############################################################################
@@ -103,6 +103,18 @@ class Box(object):
         #    DIFFICULTY:      3
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        self.contents = contents
+        self.volume = volume
+        self.original_contents = contents
+        self.original_volume = volume
+
+        if len(self.contents) > self.volume:
+            self.contents = ''
+            self.original_contents = ''
+
+        self.c_before_reset = ''
+        self.history = []
+        self.reset_times = 0
 
     def append_string(self, additional_contents):
         """
@@ -158,6 +170,18 @@ class Box(object):
         #       Read_this_ONLY_when_asked_Part_2.txt
         #    and complete your work on the problem.
         # ---------------------------------------------------------------------
+        length = self.volume - len(self.contents)
+        additional = ''
+
+        if length < len(additional_contents):
+            for k in range(length):
+                self.contents = self.contents + additional_contents[k]
+            for k in range(length, len(additional_contents)):
+                additional = additional + additional_contents[k]
+        else:
+            self.contents = self.contents + additional_contents
+
+        return additional
 
     def double(self):
         """
@@ -205,6 +229,19 @@ class Box(object):
         # FOR FULL CREDIT, YOUR SOLUTION MUST BE NO MORE THAN
         #    ** TWO **   LINES OF CODE.
         #######################################################################
+        length = self.volume - len(self.contents)
+        additional = ''
+        contents = self.contents
+
+        if length < len(self.contents):
+            for k in range(length):
+                self.contents = self.contents + contents[k]
+            for k in range(length, len(contents)):
+                additional = additional + contents[k]
+        else:
+            self.contents = self.contents + contents
+
+        return additional
 
     def shrink(self, new_volume):
         """
@@ -253,6 +290,19 @@ class Box(object):
         # IMPORTANT: Write a solution to this problem in pseudo-code,
         # and THEN translate the pseudo-code to a solution.
         # ---------------------------------------------------------------------
+        new_string = ''
+        additional = ''
+
+        if len(self.contents) >= new_volume:
+            for k in range(new_volume):
+                new_string = new_string + self.contents[k]
+            for k in range(new_volume, len(self.contents)):
+                additional = additional + self.contents[k]
+            self.contents = new_string
+
+        self.volume = new_volume
+
+        return additional
 
     def double_then_shrink(self, new_volume):
         """
@@ -306,6 +356,10 @@ class Box(object):
         #    DIFFICULTY:      5
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        left1 = self.double()
+        left2 = self.shrink(new_volume)
+
+        return len(left1) + len(left2)
 
     def reset(self):
         """
@@ -325,7 +379,10 @@ class Box(object):
         #    DIFFICULTY:      4
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
-
+        self.c_before_reset = self.contents
+        self.contents = self.original_contents
+        self.volume = self.original_volume
+        self.reset_times = self.reset_times + 1
     def steal(self, other_box):
         """
         What comes in:
@@ -357,7 +414,13 @@ class Box(object):
         # FOR FULL CREDIT, YOUR SOLUTION MUST BE NO MORE THAN
         #    ** TWO **   LINES OF CODE.
         #######################################################################
+        left = self.append_string(other_box.contents)
+        new_string = ''
 
+        for k in range(len(other_box.contents)-len(left), len(other_box.contents)):
+            new_string = new_string + other_box.contents[k]
+
+        other_box.contents = new_string
     def get_history(self):
         """
         What comes in:
@@ -396,6 +459,10 @@ class Box(object):
         #    DIFFICULTY:      6
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        if len(self.c_before_reset) != 0 and self.reset_times - 1 == len(self.history):
+            self.history = self.history + [self.c_before_reset]
+
+        return self.history
 
     def combined_box(self, other_box):
         """
@@ -423,6 +490,14 @@ class Box(object):
         #    DIFFICULTY:      4
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        new_volume = self.volume + other_box.volume
+
+        new_box = Box('', new_volume)
+
+        new_box.append_string(self.contents)
+        new_box.append_string(other_box.contents)
+
+        return new_box
 
 
 ###############################################################################

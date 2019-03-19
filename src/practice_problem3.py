@@ -180,7 +180,10 @@ def practice_problem3a(circles):
     #    DIFFICULTY:      7
     #    TIME ESTIMATE:   10 minutes.
     ###########################################################################
-
+    product = 1
+    for k in range(len(circles)):
+        product = product * circles[k].center.x
+    return product
 
 def run_test_practice_problem3b():
     """ Tests the    practice_problem3b    function. """
@@ -354,7 +357,12 @@ def practice_problem3b(sequence):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   8 minutes.
     ###########################################################################
-
+    length = len(sequence)
+    item = sequence[length - 1]
+    for k in range(len(sequence) - 1):
+        if sequence[k] == item:
+            return True
+    return False
 
 def run_test_practice_problem3c():
     """ Tests the    practice_problem3c    function. """
@@ -477,7 +485,11 @@ def practice_problem3c(sequence):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   8 minutes.
     ###########################################################################
-
+    new_list = []
+    for k in range(len(sequence)):
+        if sequence[k] == 0:
+            new_list = new_list + [k]
+    return new_list
 
 def run_test_practice_problem3d():
     """ Tests the    practice_problem3d    function. """
@@ -600,7 +612,10 @@ def practice_problem3d(sequence):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   8 minutes for each part of this problem.
     ###########################################################################
-
+    for k in range(len(sequence)):
+        if sequence[k] == 0:
+            return k
+    return -1
     ###########################################################################
     # TODO: 6. Just ABOVE this _TODO_, you should have implemented
     #     a solution for the   practice_problem3d   function.
@@ -616,7 +631,10 @@ def practice_problem3d(sequence):
     #
     #          This solution should *** HAVE NO LOOP (no FOR). ***
     ###########################################################################
-
+    list = practice_problem3c(sequence)
+    if len(list) == 0:
+        return -1
+    return list[0]
 
 def run_test_practice_problem3e():
     """ Tests the    practice_problem3e    function. """
@@ -751,7 +769,12 @@ def practice_problem3e(sequence):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   8 minutes.
     ###########################################################################
+    total = 0
 
+    for k in range(0, len(sequence), 2):
+        total = total + sequence[k]
+
+    return total
 
 ###############################################################################
 # Our tests use the following to print error messages in red.
